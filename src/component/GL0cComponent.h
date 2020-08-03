@@ -3,9 +3,10 @@
 
 class GL0cComponent {
 public:
-    GL0cComponent(GLFWwindow* const);
-    ~GL0cComponent();
+    virtual ~GL0cComponent();
 
-private:
-    GLFWwindow* mWindow;
+    virtual void update(GLFWwindow*) = 0;
+
+protected:
+    GL0cComponent();
 };
