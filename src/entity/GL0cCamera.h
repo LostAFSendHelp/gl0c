@@ -13,6 +13,7 @@ public:
     void move(float, float);
     void reset(const glm::vec3&);
     void update(GLFWwindow*) override;
+    void updatePerspective(float, float);
     glm::mat4 view() const;
     glm::mat4 projection() const;
     glm::vec3 right() const;
@@ -26,7 +27,11 @@ private:
     glm::vec3 mUp { .0f, 1.0f, .0f };
     glm::vec3 mLocation { .0f, .0f, 3.0f };
     glm::mat4 mProjection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, .1f, 100.0f);
+    
     static const float NORMALIZED_SPEED;
+    static const float BASE_FOV;
+    static const float NEAR;
+    static const float FAR;
 
     void setup();
 };

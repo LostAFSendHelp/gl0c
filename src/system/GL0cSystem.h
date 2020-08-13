@@ -11,6 +11,7 @@ public:
     GL0cSystem(const std::shared_ptr<GL0cContext>&);
     ~GL0cSystem();
 
+    void init();
     void loop();
     void terminate();
     GLFWwindow* window() const;

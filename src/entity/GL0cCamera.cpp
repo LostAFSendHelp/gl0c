@@ -1,8 +1,10 @@
 #include <glm/gtc/matrix_transform.hpp>
-#include <iostream>
 #include "GL0cCamera.h"
 
 const float GL0cCamera::NORMALIZED_SPEED = .005f;
+const float GL0cCamera::BASE_FOV = 45.0f;
+const float GL0cCamera::NEAR = .1f;
+const float GL0cCamera::FAR = 100.0f;
 
 GL0cCamera::GL0cCamera() {
     setup();
@@ -25,6 +27,10 @@ void GL0cCamera::update(GLFWwindow* window) {
     mControl.update(window);
 }
 
+void GL0cCamera::updatePerspective(float width, float height) {
+    mProjection = glm::perspective(BASE_FOV, width / height, NEAR, FAR);
+}
+
 glm::mat4 GL0cCamera::view() const {
     return glm::lookAt(mLocation, mLocation + mFront, mUp);
 }
@@ -40,7 +46,6 @@ glm::vec3 GL0cCamera::right() const {
 void GL0cCamera::setup() {    
     mControl
     .poll(GLFW_KEY_D, GLFW_KEY_A, [=](float mag) {
-        std::cout << " - " << this << std::endl;
         move(mag, .0f);
     })
     .poll(GLFW_KEY_W, GLFW_KEY_S, [=](float mag) {

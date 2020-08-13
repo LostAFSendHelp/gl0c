@@ -1,10 +1,18 @@
 #include "GL0cSystem.h"
-#include <iostream>
 
 GL0cSystem::GL0cSystem(const std::shared_ptr<GL0cContext>& context):
 mContext(context) { }
 
 GL0cSystem::~GL0cSystem() { }
+
+void GL0cSystem::init() {
+    glfwSetWindowUserPointer(window(), &camera());
+    glfwSetFramebufferSizeCallback(window(), [](GLFWwindow* w, int width, int height) {
+        glViewport(0, 0, width, height);
+        auto camera = static_cast<GL0cCamera*>(glfwGetWindowUserPointer(w));
+        camera->updatePerspective(width, height);
+    });
+}
 
 void GL0cSystem::loop() {
     while (!glfwWindowShouldClose(window())) {
@@ -14,7 +22,6 @@ void GL0cSystem::loop() {
         renderer().clear();
         renderer().render(camera());
         camera().update(window());
-        std::cout << &camera();
 
         for (auto& entity : entities()) {
             entity->update(window());

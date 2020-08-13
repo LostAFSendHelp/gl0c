@@ -15,6 +15,7 @@ static GLFWwindow* init(int width, int height, const char* title) {
 int main() {
     auto window = init(800, 600, "0c");
     auto system = GL0cSystem(GL0cContext::sample(window));
+    system.init();
     system.loop();
     system.terminate();
 
